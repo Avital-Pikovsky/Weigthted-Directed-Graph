@@ -1,12 +1,12 @@
 package dataStructure;
 
-public class edge implements edge_data{
+public class Edge implements edge_data{
 
 	private int src, dest, tag;
 	private double weigth;
 	private String info;
 	
-	public edge() {
+	public Edge() {
 		src = 0;
 		dest = 0;
 		tag = 0;
@@ -14,7 +14,7 @@ public class edge implements edge_data{
 		info = "";
 	}
 	
-	public edge(int src, int dest, int tag, double weigth, String info) {
+	public Edge(int src, int dest, int tag, double weigth, String info) {
 		this.src = src;
 		this.dest = dest;
 		this.tag = tag;
@@ -22,7 +22,7 @@ public class edge implements edge_data{
 		this.info = info;
 	}
 	
-	public edge(edge other) {
+	public Edge(Edge other) {
 		this.src = other.src;
 		this.dest = other.dest;
 		this.tag = other.tag;

@@ -1,8 +1,14 @@
 package dataStructure;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import utils.Point3D;
 
-public class node implements node_data{
+public class Node implements node_data{
+
+	public HashMap<Integer, edge_data> neighbours = new HashMap<>();//<dest node,edge>
+
 	private int key, tag;
 	private Point3D location;
 	private Double weight;
@@ -10,7 +16,7 @@ public class node implements node_data{
 
 
 	//****************constructors******************
-	public node() {
+	public Node() {
 		key = 0;
 		tag = 0;
 		weight =0.0;
@@ -18,7 +24,7 @@ public class node implements node_data{
 		info = "";
 	}
 
-	public node(int key, Point3D location, Double Weight, String info, int tag) {
+	public Node(int key, Point3D location, Double Weight, String info, int tag) {
 		this.key = key;
 		this.info = info;
 		this.weight = Weight;
@@ -26,7 +32,7 @@ public class node implements node_data{
 		this.tag = tag;
 	}
 
-	public node(node other) {
+	public Node(Node other) {
 		this.key = other.key;
 		this.weight = other.weight;
 		this.location = other.location;
@@ -78,5 +84,7 @@ public class node implements node_data{
 	public void setTag(int t) {
 		tag = t;
 	}
-
+	public Iterator<edge_data> edgeitr() {
+		return neighbours.values().iterator();
+	}
 }
