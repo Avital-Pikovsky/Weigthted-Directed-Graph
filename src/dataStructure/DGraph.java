@@ -10,6 +10,8 @@ public class DGraph implements graph{
 
 	private HashMap<Integer, node_data> nodes = new HashMap<>();//<node key, this.node>
 
+	
+	
 	@Override
 	public node_data getNode(int key) {
 		if(nodes.get(key)!=null) {
