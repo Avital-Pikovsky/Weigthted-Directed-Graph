@@ -1,17 +1,18 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class DGraph implements graph{
+public class DGraph implements graph, Serializable{
 	private int edgeSize = 0;
 	private int mc = 0;
 
-	private HashMap<Integer, node_data> nodes = new HashMap<>();//<node key, this.node>
+	public HashMap<Integer, node_data> nodes = new HashMap<>();//<node key, this.node>
 
-	
-	
+
+
 	@Override
 	public node_data getNode(int key) {
 		if(nodes.get(key)!=null) {
@@ -30,8 +31,14 @@ public class DGraph implements graph{
 
 	@Override
 	public void addNode(node_data n) {
-		nodes.put(nodes.size()+1, (Node) n);
-		mc++;
+
+		if(nodes.containsKey(n.getKey())) {
+			throw new RuntimeException("node with this key is already exist");
+		}
+		else {
+			nodes.put(n.getKey(), (Node) n);
+			mc++;
+		}				
 	}
 
 	@Override

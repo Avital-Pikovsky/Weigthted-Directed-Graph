@@ -24,12 +24,12 @@ public class Node implements node_data{
 		info = "";
 	}
 
-	public Node(int key, Point3D location, Double Weight, String info, int tag) {
-		this.key = key;
+	public Node(int key,Point3D location, double Weight, String info, int tag) {
 		this.info = info;
 		this.weight = Weight;
 		this.location = location;
 		this.tag = tag;
+		this.key = key;
 	}
 
 	public Node(Node other) {
