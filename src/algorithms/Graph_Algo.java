@@ -7,6 +7,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Queue;
+import java.util.Stack;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import dataStructure.edge_data;
 import dataStructure.graph;
@@ -77,63 +80,44 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 			System.out.println("IOException is caught"); 
 		} 
 	}
-
-	private void DFS(int key, int counter) {
-		if(counter==0 || g.getNode(key)==null)
-			return;
-		else {
-			g.getNode(key).setTag(1);
-			counter--;
-			Collection<edge_data> edgeCol = g.getE(key);
-			for(edge_data edge : edgeCol) {
-				DFS(edge.getDest(),counter);		
-			}
-		}
-	}
-
-	private void reverse() {
-
-		for(node_data a: g.nodes.values()) {
-			Node n = (Node)a;
-			for(Object e: n.neighbours.values().toArray()) {
-
-				Edge ed = (Edge)e;
-				if(ed.getTag() == 0) {
-					g.connect(ed.getDest(), ed.getSrc(), ed.getWeight());
-					Edge ed1 = (Edge)g.getEdge(ed.getDest(), ed.getSrc());
-					ed1.setTag(1);
-					g.removeEdge(ed.getSrc(), ed.getDest());					
-				}
-			}
+	public void setTag() {
+		for (node_data nodes : g.getV()) {
+			nodes.setTag(0);
 		}
 	}
 
 	@Override
 	public boolean isConnected() {
-		Collection<node_data> vCol = g.getV();
-		for(node_data node : vCol) {
-			node.setTag(0);
+		if(g.nodeSize()==1) {
+			return true;
 		}
 
-		DFS(vCol.iterator().next().getKey(), g.nodeSize());
-		for(node_data node : vCol) {
-			if(node.getTag() != 1) 
-				return false;
-		}
-		reverse();
+		Queue<Node> q=new ArrayBlockingQueue<Node>(g.nodeSize());
+		setTag();
 
-		for(node_data node : vCol) {
-			node.setTag(0);
+		for (node_data node : g.getV() ) {
+			Node n=(Node) node;
+			if (n.neighbours.values()== null) return false;
+			q.add(n);
+			n.setTag(1);
+			while (!q.isEmpty()) {
+				for (edge_data edge : q.peek().neighbours.values()) {
+					Node dest=(Node) g.getNode(edge.getDest());
+					if(dest.getTag()==0) {
+						dest.setTag(1);
+						q.add(dest);}
+				}
+				q.remove();
+			}
+			for (node_data nodes : g.getV()) {
+				if (nodes.getTag()==0) return false;
+				else nodes.setTag(0);
+			}
 		}
-
-		DFS(vCol.iterator().next().getKey(), g.nodeSize());
-		for(node_data node : vCol) {
-			if(node.getTag() != 1) 
-				return false;
-		}
+		setTag();
 		return true;
-
 	}
+
 
 	@Override
 	public double shortestPathDist(int src, int dest) {

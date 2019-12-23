@@ -26,79 +26,52 @@ public class pasta {
 		Node a=new Node(0, p1, 0.0, "dai", 0);
 		Node b=new Node(1, p2, 0.0, "dai", 0);
 		Node c=new Node(2, p3, 0.0, "dai", 0);
-		Node d=new Node(3, p4, 0.0, "dai", 0);	
-		Node e=new Node(4, p5, 0.0, "dai", 0);
-		Node f=new Node(5, p6, 0.0, "dai", 0);
-		Node j=new Node(6, p7, 0.0, "dai", 0);
-		Node h=new Node(7, p8, 0.0, "dai", 0);
-		Node i=new Node(8, p9, 0.0, "dai", 0);
+		//		Node d=new Node(3, p4, 0.0, "dai", 0);	
+		//		Node e=new Node(4, p5, 0.0, "dai", 0);
+		//		Node f=new Node(5, p6, 0.0, "dai", 0);
+		//		Node j=new Node(6, p7, 0.0, "dai", 0);
+		//		Node h=new Node(7, p8, 0.0, "dai", 0);
+		//		Node i=new Node(8, p9, 0.0, "dai", 0);
 
 		((graph) gg).addNode(a);
 		((graph) gg).addNode(b);
 		((graph) gg).addNode(c);
-		((graph) gg).addNode(d);
-		((graph) gg).addNode(e);
-		((graph) gg).addNode(f);
-		((graph) gg).addNode(j);
-		((graph) gg).addNode(h);
-		((graph) gg).addNode(i);
+		//		((graph) gg).addNode(d);
+		//		((graph) gg).addNode(e);
+		//		((graph) gg).addNode(f);
+		//		((graph) gg).addNode(j);
+		//		((graph) gg).addNode(h);
+		//		((graph) gg).addNode(i);
 
 
-		((graph) gg).connect(a.getKey(),b.getKey(),4);
-		((graph) gg).connect(b.getKey(),c.getKey(), 2);
-		((graph) gg).connect(c.getKey(),d.getKey(),4);
-		((graph) gg).connect(d.getKey(),e.getKey(), 2);
-		((graph) gg).connect(e.getKey(),f.getKey(),4);
-		((graph) gg).connect(f.getKey(),j.getKey(), 2);
-		((graph) gg).connect(j.getKey(),h.getKey(),4);
-		((graph) gg).connect(h.getKey(),i.getKey(), 2);
+		//		((graph) gg).connect(a.getKey(),b.getKey(),4);
+		//		((graph) gg).connect(b.getKey(),c.getKey(), 2);
+		//		((graph) gg).connect(c.getKey(),a.getKey(),4);
+		//		((graph) gg).connect(d.getKey(),e.getKey(), 2);
+		//		((graph) gg).connect(e.getKey(),f.getKey(),4);
+		//		((graph) gg).connect(f.getKey(),j.getKey(), 2);
+		//		((graph) gg).connect(j.getKey(),h.getKey(),4);
+		//		((graph) gg).connect(h.getKey(),i.getKey(), 2);
 
 		con.addNode(a);
 		con.addNode(b);
 		con.addNode(c);
 		con.connect(a.getKey(),b.getKey(),4);
-		con.connect(b.getKey(),c.getKey(), 2);
-		con.connect(c.getKey(),a.getKey(), 2);
+		con.connect(b.getKey(),c.getKey(),2);
+		con.connect(c.getKey(),a.getKey(),1);
+
 		Graph_Algo don = new Graph_Algo();
 		don.init(con);
 		System.out.println(don.isConnected());
 
 
 
-		//	Graph_GUI bro = new Graph_GUI(gg);
-		Graph_GUI turtle = new Graph_GUI(con);
-		//	bro.drawAll();
-//		turtle.drawAll();
-		System.out.println();
+//		Graph_GUI bro = new Graph_GUI(gg);
+//		Graph_GUI turtle = new Graph_GUI(con);
+//		bro.drawAll();
+//	 	turtle.drawAll();
 
 
-
-
-		/*
-		 * check remove
-
-		gg.removeEdge(0, 1);
-
-		gg.removeNode(1);
-		gg.removeNode(8);
-//		gg.removeNode(0);
-//		 * */
-		//		System.out.println(gg.g.nodeSize());
-		//		System.out.println(gg.g.edgeSize());
-		//		gg.removeNode(0);
-		//		System.out.println(gg.g.edgeSize());
-		//		System.out.println(gg.g.nodeSize());
-		//		System.out.println(gg.g.edgeSize());
-		//gg.removeEdge(0, 2);
-		//System.out.println(gg.g.edgeSize());
-		//StdDraw.clear();
-		//gg.reversedGraph();
-
-		//		Graph_Algo ga = new Graph_Algo();
-		//		ga.init(gg);
-		//		ga.save("#reportSnir.txt");
-		//	Graph_Algo g7 = new Graph_Algo();
-		//		g7.init("#reportSnir.txt");
 
 
 	}	
