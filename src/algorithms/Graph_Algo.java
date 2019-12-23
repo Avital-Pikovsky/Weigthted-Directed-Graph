@@ -5,17 +5,14 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.List;
 import java.util.Queue;
-import java.util.Stack;
 import java.util.concurrent.ArrayBlockingQueue;
 
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
 import dataStructure.DGraph;
-import dataStructure.Edge;
 import dataStructure.Node;
 /**
  * This empty class represents the set of graph-theory algorithms
@@ -105,23 +102,47 @@ public class Graph_Algo implements graph_algorithms, Serializable{
 					Node dest=(Node) g.getNode(edge.getDest());
 					if(dest.getTag()==0) {
 						dest.setTag(1);
-						q.add(dest);}
+						q.add(dest);
+					}
 				}
 				q.remove();
-			}
+			} 
 			for (node_data nodes : g.getV()) {
 				if (nodes.getTag()==0) return false;
 				else nodes.setTag(0);
 			}
 		}
-		setTag();
 		return true;
 	}
 
 
 	@Override
 	public double shortestPathDist(int src, int dest) {
-		return 0;
+		for (node_data nodes : g.getV()) {
+			nodes.setWeight(Double.POSITIVE_INFINITY);
+			nodes.setTag(0);
+		}
+		g.getNode(src).setWeight(0);
+
+		STPD(src, dest);
+		
+		return g.getNode(dest).getWeight();
+
+	}
+	private void STPD(int src, int dest) {
+		if(g.getNode(src).getTag() == 1|| g.getNode(src) == g.getNode(dest)) {
+			return;
+		}
+		for (edge_data edge : g.getE(src)) {
+			
+			double neWeight = edge.getWeight() + g.getNode(edge.getSrc()).getWeight();
+			double oldWeight = g.getNode(edge.getDest()).getWeight();
+			if(neWeight < oldWeight) {
+				g.getNode(edge.getDest()).setWeight(neWeight);
+			}	
+			g.getNode(edge.getSrc()).setTag(1);
+			STPD(edge.getDest(), dest);
+		}
 	}
 
 	@Override

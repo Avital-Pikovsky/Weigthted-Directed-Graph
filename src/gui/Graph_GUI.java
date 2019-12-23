@@ -29,7 +29,7 @@ public class Graph_GUI {
 	}
 
 	public void drawCanvas() {
-		StdDraw.setCanvasSize(1000, 1000);
+		StdDraw.setCanvasSize(1000, 600);
 		StdDraw.setXscale(-100, 100);
 		StdDraw.setYscale(-100, 100);
 
@@ -42,7 +42,7 @@ public class Graph_GUI {
 
 			StdDraw.point(nodes.getLocation().x(), nodes.getLocation().y());
 			StdDraw.setFont(new Font("Ariel", Font.ROMAN_BASELINE, 20));
-			StdDraw.text(nodes.getLocation().x(), nodes.getLocation().y()+3, ""+ nodes.getKey());
+			StdDraw.text(nodes.getLocation().x(), nodes.getLocation().y()+5, ""+ nodes.getKey());
 		}
 	}
 	public void drawEdges() {
