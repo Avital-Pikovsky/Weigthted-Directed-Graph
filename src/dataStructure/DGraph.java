@@ -5,13 +5,11 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class DGraph implements graph, Serializable{
+public class DGraph implements Serializable,graph {
 	private int edgeSize = 0;
 	private int mc = 0;
 
 	public HashMap<Integer, node_data> nodes = new HashMap<>();//<node key, this.node>
-
-
 
 	@Override
 	public node_data getNode(int key) {
