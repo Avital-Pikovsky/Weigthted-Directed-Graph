@@ -13,99 +13,85 @@ import utils.Point3D;
 public class pasta {
 
 	public static void main(String[] args) {
-		DGraph gg = new DGraph();
-		DGraph temp = new DGraph();
+		DGraph g = new DGraph();
+		//*************graph 1*******************************
+		Graph_Algo gg = new Graph_Algo();
+		Graph_Algo gg2 = new Graph_Algo();
 
-		Point3D p1=new Point3D(0,0);
-		Point3D p2=new Point3D(61,1);
-		Point3D p3=new Point3D(-5,-80);
-		Point3D p4=new Point3D(30,70);
-		Point3D p5=new Point3D(50,-20);
-		Point3D p6=new Point3D(4,50);
-		Point3D p7=new Point3D(-96,14);
-		Point3D p8=new Point3D(11,-3);
-		Point3D p9=new Point3D(-72,4);
-
-		Node a=new Node(0, p1, 4.4, "", 0);
-		Node b=new Node(1, p2, 2.3, "", 0);
-		Node c=new Node(2, p3, 1.2, "", 0);
-		Node d=new Node(3, p4, 2.0, "", 0);	
-		Node e=new Node(4, p5, 0.0, "", 0);
-		//		Node f=new Node(5, p6, 0.0, "dai", 0);
-		//		Node j=new Node(6, p7, 0.0, "dai", 0);
-		//		Node h=new Node(7, p8, 0.0, "dai", 0);
-		//		Node i=new Node(8, p9, 0.0, "dai", 0);
-
-		//		((graph) gg).addNode(a);
-		//		((graph) gg).addNode(b);
-		//		((graph) gg).addNode(c);
-		//		((graph) gg).addNode(d);
-		//		((graph) gg).addNode(e);
-		//		((graph) gg).addNode(f);
-		//		((graph) gg).addNode(j);
-		//		((graph) gg).addNode(h);
-		//		((graph) gg).addNode(i);
+		Point3D p1 = new Point3D(50,-30);
+		Point3D p2 = new Point3D(12,-16);
+		Point3D p3 = new Point3D(-13,-7);
+		Point3D p4 = new Point3D(64,22);
+		Point3D p5 = new Point3D(10,-52);
+		Point3D p6 = new Point3D(55,-2);
+		Point3D p7 = new Point3D(50.2,-70);
 
 
-		//		((graph) gg).conect(a.getKey(),b.getKey(),4);
-		//		((graph) gg).conect(b.getKey(),c.getKey(), 2);
-		//		((graph) gg).conect(c.getKey(),a.getKey(),4);
-		//		((graph) gg).conect(d.getKey(),e.getKey(), 2);
-		//		((graph) gg).conect(e.getKey(),f.getKey(),4);
-		//		((graph) gg).conect(f.getKey(),j.getKey(), 2);
-		//		((graph) gg).conect(j.getKey(),h.getKey(),4);
-		//		((graph) gg).conect(h.getKey(),i.getKey(), 2);
-
-		temp.addNode(a);
-		temp.addNode(b);
-		temp.addNode(c);
-		temp.addNode(d);
-		temp.addNode(e);
-		temp.connect(a.getKey(),b.getKey(),4);
-		temp.connect(b.getKey(),c.getKey(),2);
-		temp.connect(c.getKey(),d.getKey(),3);
-		temp.connect(a.getKey(),d.getKey(),1);
-		temp.connect(d.getKey(),b.getKey(),1);
-		temp.connect(a.getKey(),e.getKey(),1);
-		temp.connect(e.getKey(),a.getKey(),10);
+		Node n1 = new Node(1, p1, 0.0, "", 0);
+		Node n2 = new Node(2, p2, 0.0, "", 0);
+		Node n3 = new Node(3, p3, 0.0, "", 0);		
+		Node n4 = new Node(4, p4, 0.0, "", 0);		
+		Node n5 = new Node(5, p5, 0.0, "", 0);
+		Node n6 = new Node(6, p6, 0.0, "", 0);
+		Node n7 = new Node(7, p7, 0.0, "", 0);
 
 
+		n1.setLocation(p1);
+		n2.setLocation(p2);
+		n3.setLocation(p3);
+		n4.setLocation(p4);
+		n5.setLocation(p5);
+		n6.setLocation(p6);
+		n7.setLocation(p7);
 
-		Graph_GUI temp1 = new Graph_GUI(temp);
+
+		g.addNode(n1);
+		g.addNode(n2);
+		g.addNode(n3);
+		g.addNode(n4);
+		g.addNode(n5);
+		g.addNode(n6);
+		g.addNode(n7);
+
+
+		g.connect(n1.getKey(), n2.getKey(), 10);
+		g.connect(n2.getKey(), n4.getKey(), 15);
+		g.connect(n2.getKey(), n3.getKey(), 12);
+		g.connect(n3.getKey(), n4.getKey(), 1);
+		g.connect(n3.getKey(), n5.getKey(), 2);
+		g.connect(n4.getKey(), n5.getKey(), 5);
+		g.connect(n1.getKey(), n6.getKey(), 15);
+		g.connect(n5.getKey(), n6.getKey(), 10);
+
+		
+		//*************graph 2*******************************
+
+
+		gg.init(g);
+		gg.save("hey.txt");
+		gg2.init("hey.txt");
+
+		Graph_GUI temp1 = new Graph_GUI();
+		temp1.init(gg2.g);
+		//		temp1.g = temp1.gra.g;//nati
 		temp1.drawAll();
-		//Graph_Algo don = new Graph_Algo();
-		//don.init(temp);
-		//System.out.println(don.isconected());
 
-		//double u;
-	//	u =	don.shortestPathDist(0,2);
-		//System.out.println(u);
+		//gg.shortestPathDist(2,7);
+		//gg.shortestPath(5,2);
+		
+		//System.out.println(gg.shortestPath(2,6));
+		
+		DGraph gg3 = new DGraph();
 
-	//	List<node_data> lista = don.shortestPath(0,2);
+		Point3D p = new Point3D(50,-30);
+		Node n = new Node(1, p, 0.0, "", 0);
+		gg3.addNode(n);
+		Graph_Algo mau = new Graph_Algo();
+		mau.init(gg3);
+		mau.save("saved graphs/tusik.txt");
+	
 
 
+	}
 
-
-//
-//		Graph_GUI bro = new Graph_GUI();
-//		bro.g.addNode(a);
-//		bro.drawAll();
-//		bro.gra.save("tst.txt");
-//		Graph_Algo al = new Graph_Algo();
-//		al.init("tst.txt");
-//
-//		Graph_GUI turtle = new Graph_GUI();	
-//		turtle.g.addNode(a);
-//		turtle.g.addNode(b);
-//		turtle.g.addNode(c);
-//		turtle.g.addNode(d);
-//
-//		turtle.drawAll();
-
-		//	Graph_Algo al=new Graph_Algo();
-//		al.init(turtle.g);
-//		Graph_GUI gg2 = new Graph_GUI();
-//		gg2.g = (DGraph) al.copy();
-//		gg2.drawAll();
-	}	
 }

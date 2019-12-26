@@ -4,6 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Queue;
@@ -20,13 +21,13 @@ import dataStructure.Node;
  * @author Avital Pikovsky, Omer Katz
  *
  */
-public class Graph_Algo implements graph_algorithms{
+public class Graph_Algo implements graph_algorithms,Serializable{
 
 	public graph g;
 
 	@Override
-	public void init(graph g) {
-		this.g = g;
+	public void init(graph ga) {
+		this.g = (DGraph)ga;
 	}
 
 	@Override
@@ -129,6 +130,7 @@ public class Graph_Algo implements graph_algorithms{
 		g.getNode(src).setWeight(0);
 
 		STPD(src, dest, info);
+		//System.out.println("diatance: " + g.getNode(dest).getWeight());
 		return g.getNode(dest).getWeight();
 
 	}
@@ -143,32 +145,31 @@ public class Graph_Algo implements graph_algorithms{
 			if(neWeight < oldWeight) {
 				g.getNode(edge.getDest()).setWeight(neWeight);
 				g.getNode(edge.getDest()).setInfo(info + "->" + src);
+
+				g.getNode(edge.getSrc()).setTag(1);
+
+				//System.out.println("info: "+info + " ->" + src);
+
+				STPD(edge.getDest(), dest, info + "->" + src);
 			}	
 
-			g.getNode(edge.getSrc()).setTag(1);
-
-			//System.out.println("info: "+info + " ->" + src);
-
-			STPD(edge.getDest(), dest, info + "->" + src);
 		}
 	}
 
 	@Override
 	public List<node_data> shortestPath(int src, int dest) {
+		if(shortestPathDist(src, dest) == Double.POSITIVE_INFINITY)
+			return null;
+		
 		List<node_data> list = new ArrayList<>();
-		String info = "";
-		STPD(src, dest, info);
-		//		System.out.println("new" + g.getNode(dest).getInfo());
 
 		String s = g.getNode(dest).getInfo();
 		s = s.substring(2);
 		String[] arr =s.split("->");
 		for (int i = 0; i < arr.length; i++) {
-			//System.out.println("int="+arr[i]);
 			list.add(g.getNode(Integer.parseInt(arr[i])));
 		}
 		list.add(g.getNode(dest));
-		//System.out.println(dest);
 		return list;
 	}
 
@@ -179,7 +180,7 @@ public class Graph_Algo implements graph_algorithms{
 
 	@Override
 	public graph copy() {
-		String file="txt.txt";
+		String file="temp.txt";
 		save(file);
 		Graph_Algo newGraph =new Graph_Algo();
 		newGraph.init(file);

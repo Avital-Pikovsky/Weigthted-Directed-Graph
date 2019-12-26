@@ -1,11 +1,12 @@
 package dataStructure;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
 
 import utils.Point3D;
 
-public class Node implements node_data{
+public class Node implements node_data, Serializable{
 
 	public HashMap<Integer, edge_data> neighbours = new HashMap<>();//<dest node,edge>
 
@@ -86,5 +87,8 @@ public class Node implements node_data{
 	}
 	public Iterator<edge_data> edgeitr() {
 		return neighbours.values().iterator();
+	}
+	public String toString() {
+		return this.key+"";
 	}
 }
