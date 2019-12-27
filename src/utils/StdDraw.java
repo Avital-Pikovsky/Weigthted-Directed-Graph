@@ -1877,7 +1877,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
-		
+
 		Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
@@ -1946,19 +1946,27 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "shortestPathDist":
-			StringBuilder sb = new StringBuilder(); 
-			double d = path(sb);
-			JOptionPane.showMessageDialog(null, "The shortest path is: "+d);
-
+			try {
+				StringBuilder sb = new StringBuilder(); 
+				double d = path(sb);
+				JOptionPane.showMessageDialog(null, "The shortest path is: "+d);
+			}
+			catch(Exception ex) {
+				break;
+			}
 
 			break;
-			
-		case "shortestPath":
-			StringBuilder sbuilder = new StringBuilder(); 
-			path(sbuilder);
-			if(sbuilder.length()!=0)
-				JOptionPane.showMessageDialog(null, "The path is: "+sbuilder);
 
+		case "shortestPath":
+			try {
+				StringBuilder sbuilder = new StringBuilder(); 
+				path(sbuilder);
+				if(sbuilder.length()!=0)
+					JOptionPane.showMessageDialog(null, "The path is: "+sbuilder);
+			}
+			catch(Exception ex) {
+				break;
+			}
 			break;
 
 		case "TSP":
@@ -1997,7 +2005,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		case "removeEdge":
 
 			break;
-			
+
 		default:
 			break;
 		}
