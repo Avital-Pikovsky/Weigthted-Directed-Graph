@@ -61,43 +61,36 @@ public class Graph_GUI implements Serializable {
 		double minX=0, maxX=0, minY=0, maxY=0;
 
 		Collection<node_data> points = g.getV();
+		//setting the first node location as max\min x and max\min y.
+		minX = points.iterator().next().getLocation().x();
+		maxX = points.iterator().next().getLocation().x();
+
+		minY =points.iterator().next().getLocation().y();
+		maxY =points.iterator().next().getLocation().y();
+
+		//looping on all the nodes searching for min\max points.
 		for (node_data nodes : points) {
-			Collection<edge_data> e = g.getE(nodes.getKey());
-			for (edge_data edge : e) {
-
-				minX = nodes.getLocation().x();
-				if(g.getNode(edge.getDest()).getLocation().x() < minX)
-					minX = g.getNode(edge.getDest()).getLocation().x();
-
+			if(nodes.getLocation().x()>maxX)
 				maxX = nodes.getLocation().x();
-				if(g.getNode(edge.getDest()).getLocation().x() > maxX)
-					maxX = g.getNode(edge.getDest()).getLocation().x();
+
+			if(nodes.getLocation().x()<minX)
+				minX = nodes.getLocation().x();
+
+			if(nodes.getLocation().y()>maxY)
+				maxY = nodes.getLocation().y();
+
+			if(nodes.getLocation().y()<minY)
 
 				minY = nodes.getLocation().y();
-				if(g.getNode(edge.getDest()).getLocation().y() < minY)
-					minY = g.getNode(edge.getDest()).getLocation().y();
-
-				maxY = nodes.getLocation().y();
-				if(g.getNode(edge.getDest()).getLocation().y() > maxY)
-					maxY = g.getNode(edge.getDest()).getLocation().y();
-
-
-			}
 		}
+			System.out.println("minx: "+minX+" maxx: "+ maxX+" miny: "+ minY+" maxy: "+ maxY);
 
-
-		System.out.println("minx: "+minX+"maxx: "+ maxX+"miny: "+ minY+"maxy: "+ maxY);
-
-		StdDraw.setCanvasSize((int)(Math.abs(minX)+Math.abs(maxX))+100,(int)(Math.abs(minY)+Math.abs(maxY))+100);
-		StdDraw.setXscale(minX-10, maxX+10);
-		StdDraw.setYscale(minY-10, maxY+10);
-
-
-
-
-
-
+			StdDraw.setCanvasSize((int)(Math.abs(minX)+Math.abs(maxX))+100,(int)(Math.abs(minY)+Math.abs(maxY))+100);
+			StdDraw.setXscale(minX-10, maxX+10);
+			StdDraw.setYscale(minY-10, maxY+10);
+	
 	}
+	
 	public void drawNodes() {
 		StdDraw.setPenColor(Color.BLUE);
 		StdDraw.setPenRadius(0.03);
