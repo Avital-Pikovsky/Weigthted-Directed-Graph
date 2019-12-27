@@ -478,7 +478,6 @@ import gui.Graph_GUI;
 public final class StdDraw implements ActionListener, MouseListener, MouseMotionListener, KeyListener {
 
 	private static Graph_GUI gui;
-	private static String nodeId;
 	public static void setGui(Graph_GUI g) {
 		gui = g;
 	}
@@ -1862,6 +1861,17 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			System.out.println("Invalid image file type: " + suffix);
 		}
 	}
+
+	public static boolean isNumeric(String str) {
+		int sz = str.length();
+		for (int i = 0; i < sz; i++) {
+			if (Character.isDigit(str.charAt(i)) == false) {
+				return false;
+			}
+		}
+		return true;
+	}
+
 	private double path(StringBuilder sb) {
 		Collection<node_data> points = gui.getGraph().getV();
 		String[] arr = new String[points.size()];
@@ -1912,8 +1922,8 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	public void actionPerformed(ActionEvent e) {
 
 		switch (e.getActionCommand()) {
-		
-		
+
+
 		case "Save":
 			String fileName = JOptionPane.showInputDialog(null, "File name: ");
 			if (fileName != null) {
@@ -1929,17 +1939,19 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			Object selectedValue = JOptionPane.showInputDialog(null, "Choose file", "Message",
 					JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
 
-			gui.init(selectedValue.toString());
+			if (selectedValue!=null)
+				gui.init(selectedValue.toString());
+
 			break;
 
 		case "isConnected":
 
 			boolean b = (gui.getAlgo().isConnected());
 			if (b==true)
-				JOptionPane.showMessageDialog(null, "Is connected");
+				JOptionPane.showMessageDialog(null, "The graph is connected");
 
 			else
-				JOptionPane.showMessageDialog(null, "Is NOT connected", "Message", 0);
+				JOptionPane.showMessageDialog(null, "The graph is NOT connected", "Message", 0);
 			break;
 
 		case "shortestPathDist":
@@ -1960,16 +1972,27 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		case "TSP":
 
 			break;
+
 		case "addNode":
 			StdDraw.setPenColor(Color.BLUE);
 			StdDraw.setPenRadius(0.03);
-			nodeId = JOptionPane.showInputDialog(null, "Enter node id and Choose a location in the graph");
-			
-			
-		
+			String nodeId = JOptionPane.showInputDialog(null, "Enter node id and Choose a location in the graph");
+			String nodeX = JOptionPane.showInputDialog(null, "X: ");
+			String nodeY = JOptionPane.showInputDialog(null, "Y: ");
 
+			if(nodeX!=null && nodeY!=null && nodeId!=null) {
+				if(!isNumeric(nodeX) || !isNumeric(nodeY) || !isNumeric(nodeId)) 
+					JOptionPane.showMessageDialog(null, "Please choose valid numbers");
+				
+					else {
+					Node n =new Node(Integer.parseInt(nodeId), new Point3D(Double.parseDouble(nodeX), Double.parseDouble(nodeY)), 0, "", 0);
+					gui.getGraph().addNode(n);
+					gui.drawAll();
+					}	
+			}
 
 			break;
+
 		case "removeNode":
 
 			break;
@@ -2040,11 +2063,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		// this body is intentionally left empty
-	//	System.out.println("bye avital ------");
-		Node n =new Node(Integer.parseInt(nodeId), new Point3D(mouseX, mouseY), 0, "", 0);
-		gui.getGraph().addNode(n);
-		gui.drawAll();
-		//System.out.println("hell");////////////////////////////////////////////////////////////////////////////////////////
 	}
 
 	/**
