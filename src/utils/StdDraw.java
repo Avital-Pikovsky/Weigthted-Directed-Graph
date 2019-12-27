@@ -1877,14 +1877,19 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
+		if(selectedNodeSrc==null) return Double.POSITIVE_INFINITY;
 
 		Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
+		if(selectedNodeDest==null) return Double.POSITIVE_INFINITY;
 
 		int src = Integer.parseInt((String) selectedNodeSrc);
 		int dest = Integer.parseInt((String) selectedNodeDest);
-
+		if (src==dest) {
+			JOptionPane.showMessageDialog(null, "You choose the same node for src and dest,\n so the shorest path is 0.","Messege",2);
+			return Double.POSITIVE_INFINITY;
+		}
 		StdDraw.setPenRadius(0.005);
 		StdDraw.setPenColor(Color.green);
 		if(gui.getAlgo().shortestPath(src, dest)==null) 
@@ -1949,10 +1954,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			try {
 				StringBuilder sb = new StringBuilder(); 
 				double d = path(sb);
+				if(d==Double.POSITIVE_INFINITY) break;
 				JOptionPane.showMessageDialog(null, "The shortest path is: "+d);
 			}
 			catch(Exception ex) {
-				break;
 			}
 
 			break;
@@ -1960,12 +1965,13 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		case "shortestPath":
 			try {
 				StringBuilder sbuilder = new StringBuilder(); 
-				path(sbuilder);
+				double d =path(sbuilder);
+				if (d==Double.POSITIVE_INFINITY) break;
+
 				if(sbuilder.length()!=0)
 					JOptionPane.showMessageDialog(null, "The path is: "+sbuilder);
 			}
 			catch(Exception ex) {
-				break;
 			}
 			break;
 
