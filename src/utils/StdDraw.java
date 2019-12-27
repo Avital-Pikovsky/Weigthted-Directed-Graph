@@ -1870,7 +1870,9 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			arr[j] = node.getKey() + "";
 			j++;
 		}
-		gui.drawAll();
+		gui.drawEdges();
+		gui.drawNodes();
+
 
 		Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
 
@@ -1908,11 +1910,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		// System.out.println(e.getActionCommand()); //print to console
-
-		// String fileName = "";// from user
 
 		switch (e.getActionCommand()) {
+		
+		
 		case "Save":
 			String fileName = JOptionPane.showInputDialog(null, "File name: ");
 			if (fileName != null) {
@@ -1925,7 +1926,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			String path = "saved graphs";
 			File folder = new File(path);
 			File[] possibleValues = folder.listFiles();
-			// Object[] possibleValues = listOfFiles;
 			Object selectedValue = JOptionPane.showInputDialog(null, "Choose file", "Message",
 					JOptionPane.INFORMATION_MESSAGE, null, possibleValues, possibleValues[0]);
 
