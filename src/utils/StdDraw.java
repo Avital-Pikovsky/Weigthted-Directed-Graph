@@ -1862,16 +1862,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		}
 	}
 
-	public static boolean isNumeric(String str) {
-		int sz = str.length();
-		for (int i = 0; i < sz; i++) {
-			if (Character.isDigit(str.charAt(i)) == false) {
-				return false;
-			}
-		}
-		return true;
-	}
-
 	private double path(StringBuilder sb) {
 		Collection<node_data> points = gui.getGraph().getV();
 		String[] arr = new String[points.size()];
@@ -1887,6 +1877,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
+		
 		Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
 
 				JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
@@ -1961,6 +1952,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 
 			break;
+			
 		case "shortestPath":
 			StringBuilder sbuilder = new StringBuilder(); 
 			path(sbuilder);
@@ -1974,21 +1966,24 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "addNode":
-			StdDraw.setPenColor(Color.BLUE);
-			StdDraw.setPenRadius(0.03);
-			String nodeId = JOptionPane.showInputDialog(null, "Enter node id and Choose a location in the graph");
-			String nodeX = JOptionPane.showInputDialog(null, "X: ");
-			String nodeY = JOptionPane.showInputDialog(null, "Y: ");
+			try {
+				StdDraw.setPenColor(Color.BLUE);
+				StdDraw.setPenRadius(0.03);
 
-			if(nodeX!=null && nodeY!=null && nodeId!=null) {
-				if(!isNumeric(nodeX) || !isNumeric(nodeY) || !isNumeric(nodeId)) 
-					JOptionPane.showMessageDialog(null, "Please choose valid numbers");
-				
-					else {
-					Node n =new Node(Integer.parseInt(nodeId), new Point3D(Double.parseDouble(nodeX), Double.parseDouble(nodeY)), 0, "", 0);
-					gui.getGraph().addNode(n);
-					gui.drawAll();
-					}	
+				String nodeId = JOptionPane.showInputDialog(null, "Enter node id and Choose a location in the graph");
+				if (nodeId == null) break;
+				String nodeX = JOptionPane.showInputDialog(null, "X: ");
+				if (nodeX == null) break;
+				String nodeY = JOptionPane.showInputDialog(null, "Y: ");
+				if (nodeY == null) break;
+
+				Node n =new Node(Integer.parseInt(nodeId), new Point3D(Double.parseDouble(nodeX), Double.parseDouble(nodeY)), 0, "", 0);
+				gui.getGraph().addNode(n);
+				gui.drawAll();
+
+			}
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, "Please choose valid numbers");
 			}
 
 			break;
@@ -2002,6 +1997,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 		case "removeEdge":
 
 			break;
+			
 		default:
 			break;
 		}
