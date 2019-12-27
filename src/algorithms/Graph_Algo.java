@@ -180,7 +180,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 	@Override
 	public graph copy() {
-		String file="temp.txt";
+		String file="copy.txt";
 		save(file);
 		Graph_Algo newGraph =new Graph_Algo();
 		newGraph.init(file);

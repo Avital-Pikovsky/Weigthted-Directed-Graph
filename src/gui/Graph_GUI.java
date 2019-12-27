@@ -80,12 +80,11 @@ public class Graph_GUI implements Serializable {
 				maxY = nodes.getLocation().y();
 
 			if(nodes.getLocation().y()<minY)
-
 				minY = nodes.getLocation().y();
 		}
 			System.out.println("minx: "+minX+" maxx: "+ maxX+" miny: "+ minY+" maxy: "+ maxY);
 
-			StdDraw.setCanvasSize((int)(Math.abs(minX)+Math.abs(maxX))+100,(int)(Math.abs(minY)+Math.abs(maxY))+100);
+			StdDraw.setCanvasSize((int)(Math.abs(minX)+Math.abs(maxX))+300,(int)(Math.abs(minY)+Math.abs(maxY))+300);
 			StdDraw.setXscale(minX-10, maxX+10);
 			StdDraw.setYscale(minY-10, maxY+10);
 	
