@@ -1,6 +1,7 @@
 package gui;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import algorithms.Graph_Algo;
@@ -116,17 +117,26 @@ public class pasta {
 		f.addNode(nn4);
 		
 		f.connect(nn1.getKey(), nn2.getKey(), 4);
-		f.connect(nn2.getKey(), nn3.getKey(), 3);
+		f.connect(nn2.getKey(), nn3.getKey(), 2);
 		f.connect(nn3.getKey(), nn4.getKey(), 2);
 		f.connect(nn4.getKey(), nn1.getKey(), 1);
 		f.connect(nn2.getKey(), nn1.getKey(), 4);
-		f.connect(nn3.getKey(), nn2.getKey(), 3);
+		f.connect(nn3.getKey(), nn2.getKey(), 2);
 		f.connect(nn4.getKey(), nn3.getKey(), 2);
 		f.connect(nn1.getKey(), nn4.getKey(), 1);
-		
+		//Graph_Algo gg5 = new Graph_Algo();
+
 		Graph_GUI temp2 = new Graph_GUI();
 		temp2.init(f);
 		temp2.drawAll();
+		List<Integer> list = new ArrayList<>();
+		list.add(0);
+		list.add(1);
+		list.add(2);
+		list.add(3);
+		List<node_data> result = temp2.getAlgo().TSP(list);
+		System.out.println(result.toString());
+	
 	}
 
 }
