@@ -130,12 +130,11 @@ public class pasta {
 		temp2.init(f);
 		temp2.drawAll();
 		List<Integer> list = new ArrayList<>();
+		list.add(3);
 		list.add(0);
 		list.add(2);
-		list.add(1);
-		list.add(3);
 		List<node_data> result = temp2.getAlgo().TSP(list);
-		System.out.println(result.toString());
+		System.out.println("result:"+result.toString());
 	
 	}
 

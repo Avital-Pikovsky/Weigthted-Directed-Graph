@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -176,19 +178,35 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		if(!isConnected() || targets.isEmpty()) return null;
-		
+
 		List<node_data> targetsToNode = new ArrayList<>();
 		for(Integer tar : targets) {
 			targetsToNode.add(g.getNode(tar));
 		}
-		
 		List<node_data> finaList = new ArrayList<>();
-		
-		for(int i=0; i<targetsToNode.size()-1; i++) {
-		
+
+		while(targetsToNode.size()>1) {
+			System.out.println("hi");
+			int src =targetsToNode.get(0).getKey();
+			int dest = targetsToNode.get(1).getKey();
+			List<node_data> list = shortestPath(src, dest);
+			System.out.println("list: "+list);
+
+			for(node_data node : list) {
+				if(targetsToNode.contains(node)&&targetsToNode.size()>1) {
+					if(targetsToNode.size()!=1) {
+						System.out.println("tar: "+targetsToNode);
+						System.out.println("remove: "+node);
+						
+						targetsToNode.remove(node);
+						
+					}
+				}
+				finaList.add(node);
 			}
-			
-		
+		}
+		//finaList.add(targetsToNode.get(targetsToNode.size()-1));
+
 		return finaList;
 	}
 

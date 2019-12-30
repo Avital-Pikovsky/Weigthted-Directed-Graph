@@ -63,16 +63,17 @@ public class DGraph implements Serializable,graph {
 
 	@Override
 	public node_data removeNode(int key) {
-		node_data removed = nodes.remove(key);
-		if(removed!=null) {
-			edgeSize-=((Node)nodes.get(key)).neighbours.size();
+		if(nodes.containsKey(key)) {
+
+			edgeSize-=((Node)nodes.get(key)).neighbours.values().size();
+			
 			((Node)nodes.get(key)).neighbours.clear();
 			Iterator<Integer> it = nodes.keySet().iterator();
 			while(it.hasNext()) {
 				removeEdge(it.next(), key);
 			}	
 			mc++;
-			return removed;
+			return nodes.remove(key);
 
 		}
 		else
