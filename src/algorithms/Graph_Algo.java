@@ -176,33 +176,19 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		if(!isConnected() || targets.isEmpty()) return null;
-
+		
 		List<node_data> targetsToNode = new ArrayList<>();
 		for(Integer tar : targets) {
 			targetsToNode.add(g.getNode(tar));
 		}
+		
 		List<node_data> finaList = new ArrayList<>();
-		while(targetsToNode.size()>1) {
-			int src =targetsToNode.get(0).getKey();
-			int dest = targetsToNode.get(1).getKey();
-			List<node_data> list = shortestPath(src, dest);
-			System.out.println(list.toString()+"mama");
-			for(node_data node : list) {
-				if(targetsToNode.contains(node)) {
-					if(node!=targetsToNode.get(1)) {
-						System.out.println("\ntargets"+targetsToNode);
-						System.out.println("list"+list.toString());
-
-						targetsToNode.remove(node);
-						System.out.println("size: "+targetsToNode.size());
-					}
-					System.out.println("afterTarget"+targetsToNode);
-				}
+		
+		for(int i=0; i<targetsToNode.size()-1; i++) {
+		
 			}
-			//list.remove(list.get(list.size()-1));
-			finaList.addAll(list);
-		}
-		finaList.add(targetsToNode.get(targetsToNode.size()-1));
+			
+		
 		return finaList;
 	}
 
