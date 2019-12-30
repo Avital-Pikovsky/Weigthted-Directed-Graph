@@ -78,8 +78,12 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		catch(IOException ex) 
 		{ 
 			System.out.println("IOException is caught"); 
-		} 
-	}
+		}
+		}
+	
+		/**
+		 * This method resets all the nodes tags to 0.
+		 */
 	public void setTag() {
 		for (node_data nodes : g.getV()) {
 			nodes.setTag(0);
@@ -136,6 +140,14 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return g.getNode(dest).getWeight();
 
 	}
+	
+	/**
+	 * This is the recursive method thats get a src of a node and dest of another node,
+	 * and calculating the shortest path from the src node to his dest.
+	 * @param src - represent the start node.
+	 * @param dest - represent the final node.
+	 * @param info - a string that helps to store the path that have past at each point of the way.
+	 */
 	private void STPD(int src, int dest, String info) {
 		if(g.getNode(src).getTag() == 1 && g.getNode(src) == g.getNode(dest)) {
 			return;
@@ -150,11 +162,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 				g.getNode(edge.getSrc()).setTag(1);
 
-				//System.out.println("info: "+info + " ->" + src);
-
 				STPD(edge.getDest(), dest, info + "->" + src);
 			}	
-
 		}
 	}
 
@@ -186,27 +195,19 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		List<node_data> finaList = new ArrayList<>();
 
 		while(targetsToNode.size()>1) {
-			System.out.println("hi");
 			int src =targetsToNode.get(0).getKey();
 			int dest = targetsToNode.get(1).getKey();
 			List<node_data> list = shortestPath(src, dest);
-			System.out.println("list: "+list);
 
 			for(node_data node : list) {
 				if(targetsToNode.contains(node)&&targetsToNode.size()>1) {
-					if(targetsToNode.size()!=1) {
-						System.out.println("tar: "+targetsToNode);
-						System.out.println("remove: "+node);
-						
-						targetsToNode.remove(node);
-						
+					if(targetsToNode.size()!=1) {					
+						targetsToNode.remove(node);					
 					}
 				}
 				finaList.add(node);
 			}
 		}
-		//finaList.add(targetsToNode.get(targetsToNode.size()-1));
-
 		return finaList;
 	}
 

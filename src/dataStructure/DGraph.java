@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 public class DGraph implements Serializable,graph {
+	
 	private int edgeSize = 0;
 	private int mc = 0;
-
-	public HashMap<Integer, node_data> nodes = new HashMap<>();//<node key, this.node>
+/**
+ * A hash map that contains all the nodes in this DGraph as values,
+ *  and their key's are the map keys.
+ */
+	public HashMap<Integer, node_data> nodes = new HashMap<>();
 
 	@Override
 	public node_data getNode(int key) {
@@ -47,13 +51,14 @@ public class DGraph implements Serializable,graph {
 		if(((Node)nodes.get(src)).neighbours.containsKey(dest)) {
 			throw new RuntimeException("There is already an edge");
 		}
-			Edge e = new Edge(src, dest, 0, w , null);
-			edgeSize++;
-			((Node)nodes.get(src)).neighbours.put(dest, e);
-			mc++;
-		}
-		
-	
+
+		Edge e = new Edge(src, dest, 0, w , null);
+		edgeSize++;
+		((Node)nodes.get(src)).neighbours.put(dest, e);
+		mc++;
+	}
+
+
 
 	@Override
 	public Collection<node_data> getV() {
@@ -70,7 +75,7 @@ public class DGraph implements Serializable,graph {
 		if(nodes.containsKey(key)) {
 
 			edgeSize-=((Node)nodes.get(key)).neighbours.values().size();
-			
+
 			((Node)nodes.get(key)).neighbours.clear();
 			Iterator<Integer> it = nodes.keySet().iterator();
 			while(it.hasNext()) {
@@ -86,8 +91,7 @@ public class DGraph implements Serializable,graph {
 
 	@Override
 	public edge_data removeEdge(int src, int dest) {
-		edge_data removed = ((Node)nodes.get(src)).neighbours.remove(dest);
-		if(removed!=null) {
+		if(((Node)nodes.get(src)).neighbours.containsKey(dest)) {
 			edgeSize--;
 			mc++;
 			return ((Node)nodes.get(src)).neighbours.remove(dest);
@@ -110,6 +114,10 @@ public class DGraph implements Serializable,graph {
 	public int getMC() {
 		return mc;
 	}
+	/**
+	 * An iterator that loop on the nodes of a DGraph.
+	 * @return the iterator.
+	 */
 	public Iterator<node_data> nodeitr() {
 		return nodes.values().iterator();
 	}

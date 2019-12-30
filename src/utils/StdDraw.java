@@ -1865,6 +1865,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 	private double path(StringBuilder sb) {
 		Collection<node_data> points = gui.getGraph().getV();
+		if(points.isEmpty()) return Double.POSITIVE_INFINITY;
 		String[] arr = new String[points.size()];
 		int j = 0;
 		for (node_data node : points) {
@@ -1942,7 +1943,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "isConnected":
-
+			if(gui.getGraph().nodeSize()==0) break;
 			boolean b = (gui.getAlgo().isConnected());
 			if (b==true)
 				JOptionPane.showMessageDialog(null, "The graph is connected");
@@ -1977,6 +1978,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "TSP":
+			if(gui.getGraph().nodeSize()==0) break;
 
 			JFrame addNodeFrame = new JFrame();
 			JCheckBox checkBoxArr [] = new JCheckBox[gui.getGraph().getV().size()];
@@ -2042,60 +2044,106 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 		case "removeNode":
 			Collection<node_data> points = gui.getGraph().getV();
+			if(points.isEmpty()) break;
 			String[] arr = new String[points.size()];
 			int j = 0;
 			for (node_data node : points) {
 				arr[j] = node.getKey() + "";
 				j++;
 			}
-			Object removedNode = JOptionPane.showInputDialog(null, "Choose src node", "Message",
+			Object removedNode = JOptionPane.showInputDialog(null, "Choose node to remove", "Message",
 					JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
+			if(removedNode==null) break;
+
 			gui.getGraph().removeNode(Integer.parseInt((String) removedNode));
 			gui.drawAll();
 			break;
 
 		case "connect":
+
+			Collection<node_data> nodes = gui.getGraph().getV();
+			if(nodes.isEmpty()) break;
+			String[] array = new String[nodes.size()];
+			int z = 0;
+			for (node_data node : nodes) {
+				array[z] = node.getKey() + "";
+				z++;
+
+				gui.drawEdges();
+				gui.drawNodes();
+			}
+			Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
+
+					JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
+			if(selectedNodeSrc==null) break;
+
+			Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
+
+					JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
+			if(selectedNodeDest==null) break;
+
+			if(selectedNodeSrc.toString().equals(selectedNodeDest.toString())) {
+				JOptionPane.showMessageDialog(null, "Can't connect same src and dest","Messege",0);
+				break;
+			}
+
+			String edgeWeight = JOptionPane.showInputDialog(null, "Weight: ");
+			if (edgeWeight == null) break;
 			try {
-				Collection<node_data> nodes = gui.getGraph().getV();
-				String[] array = new String[nodes.size()];
-				int z = 0;
-				for (node_data node : nodes) {
-					array[z] = node.getKey() + "";
-					z++;
+				if(Double.parseDouble(edgeWeight)<0){
+					JOptionPane.showMessageDialog(null, "Weight must be positive","Messege",0);
+					break;
 				}
+			}
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, "Weight must be double","Messege",0);
+			}
+
+			int src = Integer.parseInt(selectedNodeSrc.toString());
+			int dest = Integer.parseInt(selectedNodeDest.toString());
+			try {
+				gui.getGraph().connect(src, dest, Double.parseDouble(edgeWeight));
 				gui.drawEdges();
 				gui.drawNodes();
 
-				Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
-
-						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
-				if(selectedNodeSrc==null) break;
-
-				Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
-
-						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
-				if(selectedNodeDest==null) break;
-
-				if(selectedNodeSrc.toString().equals(selectedNodeDest.toString())) {
-					JOptionPane.showMessageDialog(null, "Can't connect same src and dest");
-					break;
-				}
-				String edgeWeight = JOptionPane.showInputDialog(null, "Weight: ");
-				if (edgeWeight == null) break;
-				if(Double.parseDouble(edgeWeight)<0){
-					JOptionPane.showMessageDialog(null, "Weight must be positive");
-					break;
-				}
-				gui.getGraph().connect(Integer.parseInt(selectedNodeSrc.toString()), Integer.parseInt(selectedNodeDest.toString()), Double.parseDouble(edgeWeight));
-				gui.drawAll();
 			}
 			catch(Exception ex) {
-				JOptionPane.showMessageDialog(null, "There is already an edge between those to nodes");
+				JOptionPane.showMessageDialog(null, "There is already an edge between those to nodes","Messege",0);
 				break;
 			}
+
 			break;
 
 		case "removeEdge":
+			Collection<node_data> nodeCol = gui.getGraph().getV();
+			if(nodeCol.isEmpty()) break;
+			String[] arrays = new String[nodeCol.size()];
+			int t = 0;
+			for (node_data node : nodeCol) {
+				arrays[t] = node.getKey() + "";
+				t++;
+			}
+			gui.drawEdges();
+			gui.drawNodes();
+
+			Object selectedSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
+
+					JOptionPane.INFORMATION_MESSAGE, null, arrays, arrays[0]);
+			if(selectedSrc==null) break;
+
+			Object selectedDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
+
+					JOptionPane.INFORMATION_MESSAGE, null, arrays, arrays[0]);
+			if(selectedDest==null) break;
+
+			int src1 = Integer.parseInt(selectedSrc.toString());
+			int dest1 = Integer.parseInt(selectedDest.toString());
+
+			if(gui.getGraph().removeEdge(src1, dest1) != null) {
+				gui.drawAll();
+			}
+			else JOptionPane.showMessageDialog(null, "The edge doesn't exist","Messege",0);
+
 
 			break;
 

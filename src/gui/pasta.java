@@ -64,7 +64,7 @@ public class pasta {
 		g.connect(n1.getKey(), n6.getKey(), 15);
 		g.connect(n5.getKey(), n6.getKey(), 10);
 
-		
+
 		//*************graph 2*******************************
 
 
@@ -79,9 +79,9 @@ public class pasta {
 
 		//gg.shortestPathDist(2,7);
 		//gg.shortestPath(5,2);
-		
+
 		//System.out.println(gg.shortestPath(2,6));
-		
+
 		DGraph gg3 = new DGraph();
 
 		Point3D p = new Point3D(50,-30);
@@ -90,32 +90,32 @@ public class pasta {
 		Graph_Algo mau = new Graph_Algo();
 		mau.init(gg3);
 		mau.save("saved graphs/test.txt");
-	
 
-//***********************************************graph 3-snir
+
+		//***********************************************graph 3-snir
 		Point3D pp1 = new Point3D(50,0);
 		Point3D pp2 = new Point3D(0,50);
 		Point3D pp3 = new Point3D(50,50);
 		Point3D pp4 = new Point3D(0,0);
-		
+
 		Node nn3 = new Node(3, pp3, 0.0, "", 0);
 		Node nn2 = new Node(0, pp2, 0.0, "", 0);
 		Node nn4 = new Node(2, pp4, 0.0, "", 0);		
 		Node nn1 = new Node(1, pp1, 0.0, "", 0);	
-		
+
 		nn1.setLocation(pp3);
 		nn2.setLocation(pp2);
 		nn3.setLocation(pp4);
 		nn4.setLocation(pp1);
-		
+
 		DGraph f = new DGraph();
 
-		
+
 		f.addNode(nn1);
 		f.addNode(nn2);
 		f.addNode(nn3);
 		f.addNode(nn4);
-		
+
 		f.connect(nn1.getKey(), nn2.getKey(), 4);
 		f.connect(nn2.getKey(), nn3.getKey(), 2);
 		f.connect(nn3.getKey(), nn4.getKey(), 2);
@@ -127,15 +127,17 @@ public class pasta {
 		//Graph_Algo gg5 = new Graph_Algo();
 
 		Graph_GUI temp2 = new Graph_GUI();
-		temp2.init(f);
-		temp2.drawAll();
+		//		temp2.init(f);
+		//		temp2.drawAll();
 		List<Integer> list = new ArrayList<>();
 		list.add(3);
 		list.add(0);
 		list.add(2);
-		List<node_data> result = temp2.getAlgo().TSP(list);
-		System.out.println("result:"+result.toString());
-	
+		//List<node_data> result = temp2.getAlgo().TSP(list);
+		Graph_GUI fox = new Graph_GUI();
+		DGraph foxes = new DGraph();
+		fox.init(foxes);
+		fox.drawAll();
 	}
 
 }
