@@ -2066,7 +2066,6 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				gui.drawEdges();
 				gui.drawNodes();
 
-
 				Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
 
 						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
@@ -2077,8 +2076,16 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
 				if(selectedNodeDest==null) break;
 
+				if(selectedNodeSrc.toString().equals(selectedNodeDest.toString())) {
+					JOptionPane.showMessageDialog(null, "Can't connect same src and dest");
+					break;
+				}
 				String edgeWeight = JOptionPane.showInputDialog(null, "Weight: ");
 				if (edgeWeight == null) break;
+				if(Double.parseDouble(edgeWeight)<0){
+					JOptionPane.showMessageDialog(null, "Weight must be positive");
+					break;
+				}
 				gui.getGraph().connect(Integer.parseInt(selectedNodeSrc.toString()), Integer.parseInt(selectedNodeDest.toString()), Double.parseDouble(edgeWeight));
 				gui.drawAll();
 			}
@@ -2087,6 +2094,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				break;
 			}
 			break;
+
 		case "removeEdge":
 
 			break;

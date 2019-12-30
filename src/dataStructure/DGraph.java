@@ -41,15 +41,19 @@ public class DGraph implements Serializable,graph {
 
 	@Override
 	public void connect(int src, int dest, double w) {
-		if((nodes.get(src)!=null) && (nodes.get(dest)!=null)) {
+		if((nodes.get(src)==null) || (nodes.get(dest)==null)) {
+			throw new RuntimeException("Invalid input");
+		}
+		if(((Node)nodes.get(src)).neighbours.containsKey(dest)) {
+			throw new RuntimeException("There is already an edge");
+		}
 			Edge e = new Edge(src, dest, 0, w , null);
 			edgeSize++;
 			((Node)nodes.get(src)).neighbours.put(dest, e);
 			mc++;
 		}
-		else
-			throw new RuntimeException("Invalid input");
-	}
+		
+	
 
 	@Override
 	public Collection<node_data> getV() {
