@@ -2055,7 +2055,37 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "connect":
+			try {
+				Collection<node_data> nodes = gui.getGraph().getV();
+				String[] array = new String[nodes.size()];
+				int z = 0;
+				for (node_data node : nodes) {
+					array[z] = node.getKey() + "";
+					z++;
+				}
+				gui.drawEdges();
+				gui.drawNodes();
 
+
+				Object selectedNodeSrc = JOptionPane.showInputDialog(null, "Choose src node", "Message",
+
+						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
+				if(selectedNodeSrc==null) break;
+
+				Object selectedNodeDest = JOptionPane.showInputDialog(null, "Choose dest node", "Message",
+
+						JOptionPane.INFORMATION_MESSAGE, null, array, array[0]);
+				if(selectedNodeDest==null) break;
+
+				String edgeWeight = JOptionPane.showInputDialog(null, "Weight: ");
+				if (edgeWeight == null) break;
+				gui.getGraph().connect(Integer.parseInt(selectedNodeSrc.toString()), Integer.parseInt(selectedNodeDest.toString()), Double.parseDouble(edgeWeight));
+				gui.drawAll();
+			}
+			catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, "There is already an edge between those to nodes");
+				break;
+			}
 			break;
 		case "removeEdge":
 
