@@ -70,6 +70,7 @@ import java.util.NoSuchElementException;
 import javax.imageio.ImageIO;
 
 import javax.swing.ImageIcon;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -1977,6 +1978,43 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 		case "TSP":
 
+			JFrame addNodeFrame = new JFrame();
+			JCheckBox checkBoxArr [] = new JCheckBox[gui.getGraph().getV().size()];
+			int i = 0;
+			for(node_data nd: gui.getGraph().getV()) {
+				Node n = (Node)nd;
+				checkBoxArr[i] = new JCheckBox(Integer.toString(n.getKey()));
+				i++;
+			}
+			String message = "Which nodes?";
+			Object[] params = {message, checkBoxArr};
+			JOptionPane.showConfirmDialog(addNodeFrame, params, "Choose nodes", JOptionPane.DEFAULT_OPTION);
+			ArrayList<Integer> selectedNodes = new ArrayList<Integer>();
+
+			for (int j = 0; j < checkBoxArr.length; j++) {
+				if(checkBoxArr[j].isSelected()) {
+					selectedNodes.add(Integer.parseInt(checkBoxArr[j].getText()));
+				}
+			}
+
+			StringBuilder stb = new StringBuilder();
+			StdDraw.setPenRadius(0.005);
+			StdDraw.setPenColor(Color.green);
+			ArrayList<node_data> list = (ArrayList<node_data>) gui.getAlgo().TSP(selectedNodes);
+			if(list!=null) {
+				for (int m = 0; m < list.size() - 1; m++) {
+
+					line(list.get(m).getLocation().x(), list.get(m).getLocation().y(), list.get(m + 1).getLocation().x(),
+							list.get(m + 1).getLocation().y());
+
+					stb.append(list.get(m).toString()+"->");
+				}
+				stb.append(list.get(list.size()-1)+"");
+				JOptionPane.showMessageDialog(null, "TSP: " + stb.toString());
+
+			}
+			else JOptionPane.showMessageDialog(null, "No route");
+
 			break;
 
 		case "addNode":
@@ -2003,8 +2041,19 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			break;
 
 		case "removeNode":
-
+			Collection<node_data> points = gui.getGraph().getV();
+			String[] arr = new String[points.size()];
+			int j = 0;
+			for (node_data node : points) {
+				arr[j] = node.getKey() + "";
+				j++;
+			}
+			Object removedNode = JOptionPane.showInputDialog(null, "Choose src node", "Message",
+					JOptionPane.INFORMATION_MESSAGE, null, arr, arr[0]);
+			gui.getGraph().removeNode(Integer.parseInt((String) removedNode));
+			gui.drawAll();
 			break;
+
 		case "connect":
 
 			break;

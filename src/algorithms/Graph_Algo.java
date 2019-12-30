@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ArrayBlockingQueue;
 
+import javax.swing.text.html.HTMLDocument.Iterator;
+
 import dataStructure.edge_data;
 import dataStructure.graph;
 import dataStructure.node_data;
@@ -182,27 +184,29 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			targetsToNode.add(g.getNode(tar));
 		}
 		List<node_data> finaList = new ArrayList<>();
+
 		while(targetsToNode.size()>1) {
+			System.out.println("hi");
 			int src =targetsToNode.get(0).getKey();
 			int dest = targetsToNode.get(1).getKey();
 			List<node_data> list = shortestPath(src, dest);
-			System.out.println(list.toString()+"mama");
-			for(node_data node : list) {
-				if(targetsToNode.contains(node)) {
-					if(node!=targetsToNode.get(1)) {
-						System.out.println("\ntargets"+targetsToNode);
-						System.out.println("list"+list.toString());
+			System.out.println("list: "+list);
 
+			for(node_data node : list) {
+				if(targetsToNode.contains(node)&&targetsToNode.size()>1) {
+					if(targetsToNode.size()!=1) {
+						System.out.println("tar: "+targetsToNode);
+						System.out.println("remove: "+node);
+						
 						targetsToNode.remove(node);
-						System.out.println("size: "+targetsToNode.size());
+						
 					}
-					System.out.println("afterTarget"+targetsToNode);
 				}
+				finaList.add(node);
 			}
-			//list.remove(list.get(list.size()-1));
-			finaList.addAll(list);
 		}
-		finaList.add(targetsToNode.get(targetsToNode.size()-1));
+		//finaList.add(targetsToNode.get(targetsToNode.size()-1));
+
 		return finaList;
 	}
 
