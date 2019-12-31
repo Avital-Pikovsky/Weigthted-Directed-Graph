@@ -1979,6 +1979,7 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 
 		case "TSP":
 			if(gui.getGraph().nodeSize()==0) break;
+			gui.drawAll();
 
 			JFrame addNodeFrame = new JFrame();
 			JCheckBox checkBoxArr [] = new JCheckBox[gui.getGraph().getV().size()];

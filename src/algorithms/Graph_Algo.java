@@ -84,7 +84,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		/**
 		 * This method resets all the nodes tags to 0.
 		 */
-	public void setTag() {
+	private void setTag() {
 		for (node_data nodes : g.getV()) {
 			nodes.setTag(0);
 		}
@@ -136,7 +136,6 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		g.getNode(src).setWeight(0);
 
 		STPD(src, dest, info);
-		//System.out.println("diatance: " + g.getNode(dest).getWeight());
 		return g.getNode(dest).getWeight();
 
 	}
@@ -186,12 +185,44 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
-		if(!isConnected() || targets.isEmpty()) return null;
-
+		if(targets.isEmpty()) return null;
+		
 		List<node_data> targetsToNode = new ArrayList<>();
 		for(Integer tar : targets) {
 			targetsToNode.add(g.getNode(tar));
 		}
+		
+		if(targets.size()==1) return targetsToNode;
+			
+		Queue<Node> q=new ArrayBlockingQueue<Node>(targets.size());
+		for (node_data nodes : targetsToNode) {
+			nodes.setTag(0);
+		}
+
+		for (node_data node : targetsToNode) {
+			Node n=(Node) node;
+			System.out.println(n.neighbours.values().isEmpty());
+			if (n.neighbours.values()== null) return null;
+			q.add(n);
+			n.setTag(1);
+			while (!q.isEmpty()) {
+				for (edge_data edge : q.peek().neighbours.values()) {
+					Node dest=(Node) g.getNode(edge.getDest());
+					System.out.println(dest);
+					if(dest.getTag()==0) {
+						System.out.println("in");
+						dest.setTag(1);
+						q.add(dest);
+					}
+				}
+				q.remove();
+			} 
+			for (node_data nodes : targetsToNode) {
+				if (nodes.getTag()==0) return null;
+				else nodes.setTag(0);
+			}
+		}
+	
 		List<node_data> finaList = new ArrayList<>();
 
 		while(targetsToNode.size()>1) {
@@ -208,6 +239,8 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 				finaList.add(node);
 			}
 		}
+		if(!finaList.contains(targetsToNode.get(targetsToNode.size()-1)))
+		finaList.add(targetsToNode.get(targetsToNode.size()-1));
 		return finaList;
 	}
 
