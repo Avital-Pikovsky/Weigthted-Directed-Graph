@@ -13,3 +13,4 @@ DGraph - This class implements the graph interface, representing a basic graph t
 Graph_Algo - This class implemets graph_algorithms. Contains a set of algorithems and methods that can be performed on a given graph.
 
 Graph_GUI - This class contains methods that can paint a graph to the screen, using StdDraw class and JFrame.
+![fox](https://user-images.githubusercontent.com/57085913/71643325-10c6dd80-2cc1-11ea-8077-320ff3f6bfe4.png)
