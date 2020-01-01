@@ -26,6 +26,22 @@ import dataStructure.Node;
 public class Graph_Algo implements graph_algorithms,Serializable{
 
 	public graph g;
+	
+	//*************constructors**************
+	/**
+	 * Default constructor, create a new reset Graph_Algo.
+	 */
+	 public Graph_Algo() {
+		 g = new DGraph();
+	}
+	 
+	 /**
+	  * Constructor that gets a graph and create a new Graph_Algo with him.
+	  * @param g.
+	  */
+	 public Graph_Algo(graph g) {
+		 this.g = g;
+	 }
 
 	@Override
 	public void init(graph ga) {
@@ -89,10 +105,9 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			nodes.setTag(0);
 		}
 	}
-
 	@Override
 	public boolean isConnected() {
-		if(g.nodeSize()==1) {
+		if(g.nodeSize()<=1) {
 			return true;
 		}
 
