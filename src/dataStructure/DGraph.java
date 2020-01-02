@@ -114,6 +114,8 @@ public class DGraph implements Serializable,graph {
 	public int getMC() {
 		return mc;
 	}
+	
+	
 	/**
 	 * An iterator that loop on the nodes of a DGraph.
 	 * @return the iterator.

@@ -26,22 +26,22 @@ import dataStructure.Node;
 public class Graph_Algo implements graph_algorithms,Serializable{
 
 	public graph g;
-	
+
 	//*************constructors**************
 	/**
 	 * Default constructor, create a new reset Graph_Algo.
 	 */
-	 public Graph_Algo() {
-		 g = new DGraph();
+	public Graph_Algo() {
+		g = new DGraph();
 	}
-	 
-	 /**
-	  * Constructor that gets a graph and create a new Graph_Algo with him.
-	  * @param g.
-	  */
-	 public Graph_Algo(graph g) {
-		 this.g = g;
-	 }
+
+	/**
+	 * Constructor that gets a graph and create a new Graph_Algo with him.
+	 * @param g.
+	 */
+	public Graph_Algo(graph g) {
+		this.g = g;
+	}
 
 	@Override
 	public void init(graph ga) {
@@ -95,11 +95,11 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		{ 
 			System.out.println("IOException is caught"); 
 		}
-		}
-	
-		/**
-		 * This method resets all the nodes tags to 0.
-		 */
+	}
+
+	/**
+	 * This method resets all the nodes tags to 0.
+	 */
 	private void setTag() {
 		for (node_data nodes : g.getV()) {
 			nodes.setTag(0);
@@ -154,7 +154,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 		return g.getNode(dest).getWeight();
 
 	}
-	
+
 	/**
 	 * This is the recursive method thats get a src of a node and dest of another node,
 	 * and calculating the shortest path from the src node to his dest.
@@ -201,14 +201,14 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 	@Override
 	public List<node_data> TSP(List<Integer> targets) {
 		if(targets.isEmpty()) return null;
-		
+
 		List<node_data> targetsToNode = new ArrayList<>();
 		for(Integer tar : targets) {
 			targetsToNode.add(g.getNode(tar));
 		}
-		
+
 		if(targets.size()==1) return targetsToNode;
-			
+
 		Queue<Node> q=new ArrayBlockingQueue<Node>(targets.size());
 		for (node_data nodes : targetsToNode) {
 			nodes.setTag(0);
@@ -216,16 +216,13 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 		for (node_data node : targetsToNode) {
 			Node n=(Node) node;
-			System.out.println(n.neighbours.values().isEmpty());
 			if (n.neighbours.values()== null) return null;
 			q.add(n);
 			n.setTag(1);
 			while (!q.isEmpty()) {
 				for (edge_data edge : q.peek().neighbours.values()) {
 					Node dest=(Node) g.getNode(edge.getDest());
-					System.out.println(dest);
 					if(dest.getTag()==0) {
-						System.out.println("in");
 						dest.setTag(1);
 						q.add(dest);
 					}
@@ -234,10 +231,12 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			} 
 			for (node_data nodes : targetsToNode) {
 				if (nodes.getTag()==0) return null;
-				else nodes.setTag(0);
+				else {nodes.setTag(0);
+				}
 			}
+			setTag();
 		}
-	
+
 		List<node_data> finaList = new ArrayList<>();
 
 		while(targetsToNode.size()>1) {
@@ -255,7 +254,9 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 			}
 		}
 		if(!finaList.contains(targetsToNode.get(targetsToNode.size()-1)))
-		finaList.add(targetsToNode.get(targetsToNode.size()-1));
+			finaList.add(targetsToNode.get(targetsToNode.size()-1));
+
+		setTag();
 		return finaList;
 	}
 

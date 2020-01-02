@@ -1,7 +1,10 @@
 package gui;
 
+import java.util.ArrayList;
+
 import dataStructure.DGraph;
 import dataStructure.Node;
+import dataStructure.node_data;
 import utils.Point3D;
 
 public class gui_main {
@@ -19,8 +22,8 @@ public class gui_main {
 		e.connect(1, 2, 2);
 		e.connect(2, 3, 3);
 		e.connect(3, 1, 1);
-		
-		Example.init(e);
+	
+		Example.init(e);	
 		Example.drawAll();
 	}
 }

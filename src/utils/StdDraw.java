@@ -1981,38 +1981,42 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			if(gui.getGraph().nodeSize()==0) break;
 			gui.drawAll();
 
-			JFrame addNodeFrame = new JFrame();
-			JCheckBox checkBoxArr [] = new JCheckBox[gui.getGraph().getV().size()];
-			int i = 0;
-			for(node_data nd: gui.getGraph().getV()) {
-				Node n = (Node)nd;
-				checkBoxArr[i] = new JCheckBox(Integer.toString(n.getKey()));
-				i++;
+			Collection<node_data> tspNodes = gui.getGraph().getV();
+			if(tspNodes.isEmpty()) break;
+			String[] tspArr = new String[tspNodes.size()];
+			int t = 0;
+			for (node_data node : tspNodes) {
+				tspArr[t] = node.getKey() + "";
+				t++;
 			}
-			String message = "Which nodes?";
-			Object[] params = {message, checkBoxArr};
-			JOptionPane.showConfirmDialog(addNodeFrame, params, "Choose nodes", JOptionPane.DEFAULT_OPTION);
-			ArrayList<Integer> selectedNodes = new ArrayList<Integer>();
+			gui.drawEdges();
+			gui.drawNodes();
 
-			for (int j = 0; j < checkBoxArr.length; j++) {
-				if(checkBoxArr[j].isSelected()) {
-					selectedNodes.add(Integer.parseInt(checkBoxArr[j].getText()));
-				}
+			ArrayList<Integer> targets = new ArrayList<>();
+			String tspCount = JOptionPane.showInputDialog(null, "How many nodes? ");
+			if (tspCount==null) break;
+
+			for(int c=0; c<Integer.parseInt(tspCount);c++) {
+				Object selectedNode = JOptionPane.showInputDialog(null, "Choose a node", "Message",
+						JOptionPane.INFORMATION_MESSAGE, null, tspArr, tspArr[0]);
+				if(selectedNode==null) break;
+				targets.add(Integer.parseInt(selectedNode.toString()));
 			}
-
 			StringBuilder stb = new StringBuilder();
 			StdDraw.setPenRadius(0.005);
 			StdDraw.setPenColor(Color.green);
-			ArrayList<node_data> list = (ArrayList<node_data>) gui.getAlgo().TSP(selectedNodes);
-			if(list!=null) {
-				for (int m = 0; m < list.size() - 1; m++) {
+			ArrayList<node_data> tspList =  (ArrayList<node_data>) gui.getAlgo().TSP(targets);
+			
+			if(tspList!=null) {
+				for (int m = 0; m < tspList.size() - 1; m++) {
 
-					line(list.get(m).getLocation().x(), list.get(m).getLocation().y(), list.get(m + 1).getLocation().x(),
-							list.get(m + 1).getLocation().y());
+					line(tspList.get(m).getLocation().x(), tspList.get(m).getLocation().y(), tspList.get(m + 1).getLocation().x(),
+							tspList.get(m + 1).getLocation().y());
 
-					stb.append(list.get(m).toString()+"->");
+					stb.append(tspList.get(m).toString()+"->");
 				}
-				stb.append(list.get(list.size()-1)+"");
+				stb.append(tspList.get(tspList.size()-1)+"");
+
 				JOptionPane.showMessageDialog(null, "TSP: " + stb.toString());
 
 			}
@@ -2119,10 +2123,10 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 			Collection<node_data> nodeCol = gui.getGraph().getV();
 			if(nodeCol.isEmpty()) break;
 			String[] arrays = new String[nodeCol.size()];
-			int t = 0;
+			int l = 0;
 			for (node_data node : nodeCol) {
-				arrays[t] = node.getKey() + "";
-				t++;
+				arrays[l] = node.getKey() + "";
+				l++;
 			}
 			gui.drawEdges();
 			gui.drawNodes();
