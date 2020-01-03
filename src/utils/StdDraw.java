@@ -2000,13 +2000,14 @@ public final class StdDraw implements ActionListener, MouseListener, MouseMotion
 				Object selectedNode = JOptionPane.showInputDialog(null, "Choose a node", "Message",
 						JOptionPane.INFORMATION_MESSAGE, null, tspArr, tspArr[0]);
 				if(selectedNode==null) break;
+
 				targets.add(Integer.parseInt(selectedNode.toString()));
 			}
 			StringBuilder stb = new StringBuilder();
 			StdDraw.setPenRadius(0.005);
 			StdDraw.setPenColor(Color.green);
 			ArrayList<node_data> tspList =  (ArrayList<node_data>) gui.getAlgo().TSP(targets);
-			
+
 			if(tspList!=null) {
 				for (int m = 0; m < tspList.size() - 1; m++) {
 

@@ -204,6 +204,7 @@ public class Graph_Algo implements graph_algorithms,Serializable{
 
 		List<node_data> targetsToNode = new ArrayList<>();
 		for(Integer tar : targets) {
+			if(!(targetsToNode.contains(g.getNode(tar))))
 			targetsToNode.add(g.getNode(tar));
 		}
 
